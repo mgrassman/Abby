@@ -31,4 +31,6 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+//used for MVC plugins
+app.MapControllers();
 app.Run();

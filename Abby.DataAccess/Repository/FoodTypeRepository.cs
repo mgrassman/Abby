@@ -16,11 +16,7 @@ namespace Abby.DataAccess.Repository
         {
             _db = db;
         }
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
-
+        
         public void Update(FoodType foodType)
         {
             //Use if only certain fields need to updated
