@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,15 @@ namespace Abby.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderby = null,
+            string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if(filter != null)
+            {
+                query = query.Where(filter);
+            }
             if(includeProperties != null)
             {
                 //abc,xyz -> abc xyz
@@ -37,15 +44,27 @@ namespace Abby.DataAccess.Repository
                     query = query.Include(includeProperty);
                 }
             }
+            if(orderby != null)
+            {
+                return orderby(query).ToList();
+            }
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>>? filter = null)
+        public T GetFirstOrDefault(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             if(filter != null)
             {
                 query = query.Where(filter);
+            }
+            if (includeProperties != null)
+            {
+                //abc,xyz -> abc xyz
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
             }
             return query.FirstOrDefault();
         }
