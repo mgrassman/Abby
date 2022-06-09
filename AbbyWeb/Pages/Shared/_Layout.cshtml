@@ -32,13 +32,19 @@
                             <a class="dropdown-item" asp-area="" asp-page="/Admin/Categories/Index">Categories</a>
                             <a class="dropdown-item" asp-area="" asp-page="/Admin/FoodTypes/Index">Food Types</a>
                             <a class="dropdown-item" asp-area="" asp-page="/Admin/MenuItems/Index">Menu Items</a>
+                            <div class="dropdown-divider"></div>
+                            
                             @*<a class="dropdown-item" href="#">Another action</a>
                             <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
+                            
                             <a class="dropdown-item" href="#">Separated link</a>*@
                           </div>
                         </li>
-                        
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-page="/Customer/Cart/Index">
+                                <i class="bi bi-cart"></i>
+                            </a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
